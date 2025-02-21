@@ -1,0 +1,16 @@
+# Laravel (backend)
+backend/vendor/
+backend/storage/
+backend/bootstrap/cache/
+backend/.env
+backend/.env.*
+
+# Angular (frontend)
+frontend/node_modules/
+frontend/dist/
+
+# IDE et OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db

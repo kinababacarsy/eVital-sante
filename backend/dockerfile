@@ -1,0 +1,30 @@
+# Utilisation de l'image officielle PHP avec Apache
+FROM php:8.2-apache
+
+# Installation des extensions PHP nécessaires
+RUN apt-get update && apt-get install -y \
+    libpng-dev \
+    libjpeg-dev \
+    libfreetype6-dev \
+    zip \
+    unzip \
+    git \
+    curl \
+    && docker-php-ext-configure gd \
+    && docker-php-ext-install gd pdo pdo_mysql
+
+# Installation de Composer
+COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
+
+# Copie du code Laravel dans le conteneur
+WORKDIR /var/www/html
+COPY . .
+
+# Configuration des permissions
+RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
+
+# Exposition du port 80
+EXPOSE 80
+
+# Lancement d'Apache
+CMD ["apache2-foreground"]

@@ -1,0 +1,46 @@
+services:
+  backend:
+    build: ./backend
+    container_name: evital-backend
+    ports:
+      - "8000:80"
+    volumes:
+      - ./backend:/var/www/html
+    environment:
+      - APP_ENV=local
+      - APP_DEBUG=true
+      - APP_KEY=base64:randomkey
+      - DB_CONNECTION=mongodb
+      - DB_HOST=evital-mongodb
+      - DB_PORT=27017
+      - DB_DATABASE=evital
+      - DB_USERNAME=root
+      - DB_PASSWORD=rootpassword
+    depends_on:
+      - db
+
+  frontend:
+    build: ./frontend
+    container_name: evital-frontend
+    ports:
+      - "4200:4200"
+    volumes:
+      - ./frontend:/app
+    depends_on:
+      - backend
+
+  db:
+    image: mongo:6
+    container_name: evital-mongodb
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: rootpassword
+      MONGO_INITDB_DATABASE: evital
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb_data:/data/db
+
+volumes:
+  mongodb_data:

@@ -1,0 +1,21 @@
+# Utilisation de l'image officielle Node.js
+FROM node:18
+
+# Définition du répertoire de travail
+WORKDIR /app
+
+# Copie des fichiers Angular et installation des dépendances
+COPY package*.json ./
+RUN npm install
+
+# Copie du reste du projet
+COPY . .
+
+# Compilation Angular en mode production
+RUN npm run build
+
+# Exposition du port 4200
+EXPOSE 4200
+
+# Commande de lancement
+CMD ["npm", "start"]

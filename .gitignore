@@ -14,3 +14,14 @@ frontend/dist/
 .idea/
 .DS_Store
 Thumbs.db
+
+# Docker
+backend/vendor/
+backend/storage/
+backend/bootstrap/cache/
+backend/.env
+backend/.env.*
+frontend/node_modules/
+frontend/dist/
+db_data/
+
